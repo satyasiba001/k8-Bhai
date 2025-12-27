@@ -1,21 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
-  labels:
-    type: app
-    env: prod
+  name: httpd-frontend
 spec:
   selector:
     matchLabels:
       type: appli
   template:
     metadata:
-      name: nginx-pod
+      name: httpd-frontend-pod
       labels:
         type: appli
     spec:
       containers:
-        - name: nginx
-          image: nginx:latest
+        - name: httpd
+          image: httpd:2.4-alpine
   replicas: 3
