@@ -1,18 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpd-frontend
+  name: red
 spec:
   selector:
     matchLabels:
-      type: appli
+      app: red
   template:
     metadata:
-      name: httpd-frontend-pod
+      name: redpod
       labels:
-        type: appli
+        app: red
     spec:
       containers:
-        - name: httpd
-          image: httpd:2.4-alpine
-  replicas: 3
+        - name: nginx-container
+          image: nginx
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+                
+  replicas: 2
